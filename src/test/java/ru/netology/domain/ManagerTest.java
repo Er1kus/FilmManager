@@ -27,7 +27,7 @@ public class ManagerTest {
     FilmItem ninth = new FilmItem(9, "Seven");
     FilmItem tenth = new FilmItem(10, "Inception");
     FilmItem eleventh = new FilmItem(11, "Dark knight");
-    FilmItem twelwe = new FilmItem(12, "Jurassic world");
+    FilmItem twelve = new FilmItem(12, "Jurassic world");
 
     @BeforeEach
     void setData() {
@@ -42,7 +42,7 @@ public class ManagerTest {
         manager.save(ninth);
         manager.save(tenth);
         manager.save(eleventh);
-        manager.save(twelwe);
+        manager.save(twelve);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ManagerTest {
 
 
         FilmItem[] actual = manager.findAll();
-        FilmItem[] expected = new FilmItem[]{first, second, third, forth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelwe};
+        FilmItem[] expected = new FilmItem[]{first, second, third, forth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelve};
 
 
         assertArrayEquals(expected, actual);
@@ -62,7 +62,7 @@ public class ManagerTest {
 
 
         FilmItem[] actual = manager.findLast();
-        FilmItem[] expected = new FilmItem[]{twelwe, eleventh, tenth, ninth, eighth, seventh, sixth, fifth, forth, third,};
+        FilmItem[] expected = new FilmItem[]{twelve, eleventh, tenth, ninth, eighth, seventh, sixth, fifth, forth, third,};
 
         assertArrayEquals(expected, actual);
 
@@ -91,7 +91,7 @@ public class ManagerTest {
 //        manager.save(ninth);
 //        manager.save(tenth);
 //        manager.save(eleventh);
-//        manager.save(twelwe);
+//        manager.save(twelve);
 
 
         FilmItem[] actual = manager.findLast();
@@ -115,10 +115,10 @@ public class ManagerTest {
         manager.save(ninth);
         manager.save(tenth);
         manager.save(eleventh);
-        manager.save(twelwe);
+        manager.save(twelve);
 
         FilmItem[] actual = manager.findLast();
-        FilmItem[] expected = new FilmItem[]{twelwe, eleventh, tenth, ninth, eighth};
+        FilmItem[] expected = new FilmItem[]{twelve, eleventh, tenth, ninth, eighth};
 
         assertArrayEquals(expected, actual);
 
@@ -138,7 +138,7 @@ public class ManagerTest {
 //        manager.save(ninth);
 //        manager.save(tenth);
 //        manager.save(eleventh);
-//        manager.save(twelwe);
+//        manager.save(twelve);
 //
 //        FilmItem[] actual = manager.findLast();
 //        FilmItem[] expected = new FilmItem[]{};
