@@ -2,6 +2,7 @@ package ru.netology.domain;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import ru.netology.domain.FilmItem;
 
 import org.junit.jupiter.api.Assertions;
@@ -12,9 +13,21 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ManagerTest {
-    Manager manager = new Manager();
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
+
+
+@ExtendWith(MockitoExtension.class)
+public class ManagerTest {
+    @Mock
+    private FilmRepository repository = Mockito.mock(FilmRepository.class);
+    @InjectMocks
+    private Manager manager = new Manager(repository);
 
     FilmItem first = new FilmItem(1, "Terminator");
     FilmItem second = new FilmItem(2, "Die Hard");
@@ -29,121 +42,30 @@ public class ManagerTest {
     FilmItem eleventh = new FilmItem(11, "Dark knight");
     FilmItem twelve = new FilmItem(12, "Jurassic world");
 
-    @BeforeEach
-    void setData() {
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-        manager.save(seventh);
-        manager.save(eighth);
-        manager.save(ninth);
-        manager.save(tenth);
-        manager.save(eleventh);
-        manager.save(twelve);
-    }
-
     @Test
-    public void shouldFindAll() {
-
+    public void shouldShowAll() {
+        FilmItem[] returned = {first, second, third, forth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelve};
+        doReturn(returned).when(repository).findAll();
 
         FilmItem[] actual = manager.findAll();
-        FilmItem[] expected = new FilmItem[]{first, second, third, forth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelve};
+        FilmItem[] expected = {twelve, eleventh, tenth, ninth, eighth, seventh, sixth, fifth, forth, third, second, first};
 
+        Assertions.assertArrayEquals(expected, actual);
 
-        assertArrayEquals(expected, actual);
+        verify(repository).findAll();
     }
 
     @Test
-
-    public void shouldShowReverse() {
-
-
-        FilmItem[] actual = manager.findLast();
-        FilmItem[] expected = new FilmItem[]{twelve, eleventh, tenth, ninth, eighth, seventh, sixth, fifth, forth, third,};
-
-        assertArrayEquals(expected, actual);
-
-    }
-
-    @Test
-
-    public void shouldShowPart() {
-        Manager manager = new Manager();
-        FilmItem first = new FilmItem(1, "Terminator");
-        FilmItem second = new FilmItem(2, "Die Hard");
-        FilmItem third = new FilmItem(3, "Rambo");
-        FilmItem forth = new FilmItem(4, "Predator");
-        FilmItem fifth = new FilmItem(5, "Alien");
-        FilmItem sixth = new FilmItem(6, "Godfather");
-        FilmItem seventh = new FilmItem(7, "Game");
-        FilmItem eighth = new FilmItem(8, "Fight club");
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-        manager.save(seventh);
-        manager.save(eighth);
-//        manager.save(ninth);
-//        manager.save(tenth);
-//        manager.save(eleventh);
-//        manager.save(twelve);
-
+    public void shouldShowLast() {
+        FilmItem[] returned = {twelve, eleventh, tenth, ninth, eighth, seventh, sixth, fifth, forth, third};
+        doReturn(returned).when(repository).findAll();
 
         FilmItem[] actual = manager.findLast();
-        FilmItem[] expected = new FilmItem[]{eighth, seventh, sixth, fifth, forth, third, second, first};
+        FilmItem[] expected = new FilmItem[]{third, forth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelve};
 
         assertArrayEquals(expected, actual);
-
+        verify(repository).findAll();
     }
 
-    @Test
-    public void shouldShowLessThanFixed() {
-        Manager manager = new Manager(5);
-        manager.save(first);
-        manager.save(second);
-        manager.save(third);
-        manager.save(forth);
-        manager.save(fifth);
-        manager.save(sixth);
-        manager.save(seventh);
-        manager.save(eighth);
-        manager.save(ninth);
-        manager.save(tenth);
-        manager.save(eleventh);
-        manager.save(twelve);
-
-        FilmItem[] actual = manager.findLast();
-        FilmItem[] expected = new FilmItem[]{twelve, eleventh, tenth, ninth, eighth};
-
-        assertArrayEquals(expected, actual);
-
-    }
-
-//    @Test
-//    public void shouldShowNull() {
-//        Manager manager = new Manager(-5);
-//        manager.save(first);
-//        manager.save(second);
-//        manager.save(third);
-//        manager.save(forth);
-//        manager.save(fifth);
-//        manager.save(sixth);
-//        manager.save(seventh);
-//        manager.save(eighth);
-//        manager.save(ninth);
-//        manager.save(tenth);
-//        manager.save(eleventh);
-//        manager.save(twelve);
-//
-//        FilmItem[] actual = manager.findLast();
-//        FilmItem[] expected = new FilmItem[]{};
-//
-//        assertArrayEquals(expected, actual);
-//
-//    }
 }
+
