@@ -8,6 +8,9 @@ public class Manager {
         this.repository = repository;
         this.amountFilm = 10;
     }
+    public Manager(int amountFilm){
+        this.amountFilm = amountFilm;
+    }
 
     public void add(FilmItem item) {
         repository.save(item);
